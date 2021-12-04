@@ -36,9 +36,9 @@
                 {{--precio medio--}}
                 <div class="bg-white m-2 overflow-hidden shadow rounded-t-xl text-center divide-y divide-gray-200">
                     <div class=" bg-pink-900 text-2xl text-white tracking-wide  px-4 py-5 sm:px-6">
-                        Precio medio
+                        Precio Medio
                     </div>
-                    <div class="px-4 py-5 sm:p-6">
+                    <div class="text-2xl bg-yellow-200 px-4 py-5 sm:p-6">
                         {{$averagePrice}}
                     </div>
                 </div>
