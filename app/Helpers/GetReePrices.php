@@ -4,24 +4,28 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 use App\Contracts\GetPrices;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use JsonException;
 
 class GetReePrices implements GetPrices
 {
 
-    /**
-     * @throws JsonException
-     */
-    public function getPrices(
-        Date $startDate=null,
-       Date  $endDate=null
-    ): bool|string {
+    protected Carbon $endDate;
+    protected Carbon $startDate;
+
+    public function __construct()
+    {
+        $this->startDate = Carbon::today();
+        $this->endDate = Carbon::tomorrow();
+
+    }
+
+    public function getPrices(): bool|string {
         $token = 'Token token=' . config('luzapp.ree_esios_token');
         $url = config('luzapp.api_base_url') . 'indicators/1001';
-        if ($startDate !==null){
-            $url.=urlencode("?start_date=$startDate&end_date=$endDate");
+        if ($this->startDate !== null) {
+            $url .= urlencode("?start_date=$this->startDate&end_date=$this->endDate");
+
         }
         $response = Http::withHeaders([
             'Accept' => 'application/json',
