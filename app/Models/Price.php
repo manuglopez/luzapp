@@ -21,8 +21,7 @@ class Price extends Model
 
     public static function indate($date)
     {
-
-        return self::where('datetime', 'like', $date);
+        return self::where('datetime','like',$date.'%')->get();
     }
 
     public function scopeNow()
@@ -33,6 +32,12 @@ class Price extends Model
                 ['geo_id', 8741]
             ]
         )->get();
+    }
+
+    public function getMinDateInPrices()
+    {
+        $minDate = Self::first()->min('tz_time');
+        return Carbon::parse($minDate)->format('Y-m-d');
     }
 
     public function scopeCeutaMelillaNow()

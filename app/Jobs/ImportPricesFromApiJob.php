@@ -29,7 +29,7 @@ class ImportPricesFromApiJob implements ShouldQueue
      */
     public function __construct(GetPrices $prices, ElectricPricesToModelConverter $converter)
     {
-        $this->prices= resolve (GetReePrices::class);
+        $this->prices= $prices;
 
     }
 

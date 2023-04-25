@@ -4,33 +4,23 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 use App\Contracts\GetPrices;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class GetReePrices implements GetPrices
 {
 
-    protected Carbon $endDate;
-    protected Carbon $startDate;
 
-    public function __construct()
+    public function getPrices(): bool|string
     {
-        $this->startDate = Carbon::today();
-        $this->endDate = Carbon::tomorrow();
-
-    }
-
-    public function getPrices(): bool|string {
         $token = 'Token token=' . config('luzapp.ree_esios_token');
         $url = config('luzapp.api_base_url') . 'indicators/1001';
-        if ($this->startDate !== null) {
-            $url .= urlencode("?start_date=$this->startDate&end_date=$this->endDate");
 
-        }
+
+        ray($url);
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'Authorization' => $token
+            'x-api-key' => $token
         ])->get($url);
 
         if ($response->successful()) {

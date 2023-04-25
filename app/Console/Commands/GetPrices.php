@@ -6,6 +6,7 @@ use App\Helpers\ElectricPricesToModelConverter;
 use App\Helpers\GetReePrices;
 use App\Jobs\ImportPricesFromApiJob;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class GetPrices extends Command
 {
@@ -29,13 +30,12 @@ class GetPrices extends Command
      *
      * @return int
      */
-    public function handle():int
+    public function handle(): int
     {
+
         $prices= resolve(GetReePrices::class);
-        if (null!== $prices){
-            $converter=(new ElectricPricesToModelConverter($prices));
-            dispatch(new ImportPricesFromApiJob($prices,$converter));
-        }
+        $converter = (new ElectricPricesToModelConverter($prices));
+        dispatch(new ImportPricesFromApiJob($prices, $converter));
 
 
         return 0;

@@ -6,6 +6,7 @@ namespace App\Helpers;
 use App\Contracts\GetPrices;
 use App\Models\Price;
 use Exception;
+use JsonException;
 
 
 class ElectricPricesToModelConverter
@@ -19,12 +20,11 @@ class ElectricPricesToModelConverter
      */
     public function __construct(GetPrices $indicatorData)
     {
-        $prices= $indicatorData->getPrices();
+        $prices = $indicatorData->getPrices();
 
-        if ($prices !== null){
-            $this->indicatorData = json_decode($prices, true, 512, JSON_THROW_ON_ERROR);
 
-        }
+        $this->indicatorData = json_decode($prices, true, 512, JSON_THROW_ON_ERROR);
+
 
     }
 
